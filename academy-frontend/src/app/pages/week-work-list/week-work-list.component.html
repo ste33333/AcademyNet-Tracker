@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-muted mb-0">All Work Activities</h2>
+    <button class="btn btn-success btn-sm" (click)="openAddWeekWorkModal()">
+      <i class="bi bi-plus-lg me-1"></i> Add Activity
+    </button>
+  </div>
+  
+  <div *ngIf="isLoading" class="text-center my-5">
+      <div class="spinner-border text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div>
+      <p class="mt-2">Loading activities...</p>
+  </div>
+  <div *ngIf="errorMessage && !isLoading" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div><i class="bi bi-exclamation-triangle-fill me-2"></i> {{ errorMessage }}</div>
+      <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+  </div>
+  <div *ngIf="successMessage && !isLoading" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+  </div>
+  
+  
+  <div *ngIf="!isLoading && !errorMessage" class="table-responsive shadow-sm rounded border">
+    <table class="table table-striped table-hover table-sm mb-0 align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Worker</th>
+          <th scope="col">Activity</th>
+          <th scope="col" class="text-end" style="width: 90px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (activity of weekWorks; track activity.id) {
+          <tr>
+            <td>{{ activity.workDate | date: 'yyyy-MM-dd' }}</td>
+            <td>
+               <a [routerLink]="['/workers', activity.workerEnrollement]" title="View Worker Detail" class="text-decoration-none">
+                   {{ activity.workerFullName }}
+               </a>
+               <span class="text-muted small"> ({{ activity.workerEnrollement }})</span>
+             </td>
+            <td>{{ activity.activity || '-' }}</td>
+            <td class="text-end">
+               <div class="btn-group btn-group-sm">
+                   <button class="btn btn-outline-secondary py-0 px-1" title="Edit Activity" (click)="openEditWeekWorkModal(activity)"> <i class="bi bi-pencil-fill small"></i> </button>
+                   <button class="btn btn-outline-danger py-0 px-1" title="Delete Activity" (click)="deleteWeekWork(activity)"> <i class="bi bi-trash-fill small"></i> </button>
+               </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr> <td colspan="4" class="text-center text-muted py-3"> <i class="bi bi-info-circle me-2"></i>No work activities found.</td> </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="modal fade" id="weekWorkModalList" tabindex="-1" aria-labelledby="weekWorkModalLabelList" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="weekWorkForm" (ngSubmit)="saveWeekWork()">
+           <div class="modal-header">
+              <h1 class="modal-title fs-5" id="weekWorkModalLabelList"> {{ editingWeekWork ? 'Edit Activity' : 'Add New Activity' }} </h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeWeekWorkModal()"></button>
+           </div>
+           <div class="modal-body">
+              <div *ngIf="modalErrorMessage" class="alert alert-danger small p-2 text-center"> {{ modalErrorMessage }} </div>
+  
+               <div class="mb-3" *ngIf="!editingWeekWork">
+                  <label for="workerEnrollment" class="form-label">Worker <span class="text-danger">*</span></label>
+                  <select id="workerEnrollment" class="form-select form-select-sm" formControlName="workerEnrollment"
+                         [class.is-invalid]="modalF['workerEnrollment'].invalid && modalF['workerEnrollment'].touched">
+                      <option value="" disabled selected>Select Worker...</option>
+                      @for(worker of availableWorkers; track worker.enrollment) {
+                         <option [value]="worker.enrollment">{{ worker.fullName }} ({{ worker.enrollment }})</option>
+                      }
+                  </select>
+                   <div *ngIf="modalF['workerEnrollment'].invalid && modalF['workerEnrollment'].touched" class="invalid-feedback d-block small"> Worker selection is required. </div>
+              </div>
+               <div class="mb-3" *ngIf="editingWeekWork">
+                   <label class="form-label">Worker</label>
+                   <input type="text" class="form-control form-control-sm" [value]="editingWeekWork?.workerFullName + ' (' + editingWeekWork?.workerEnrollement + ')'" disabled readonly>
+               </div>
+  
+              <div class="mb-3">
+                <label for="workDate" class="form-label">Date <span class="text-danger">*</span></label>
+                <input type="date" id="workDate" class="form-control form-control-sm" formControlName="workDate" [class.is-invalid]="modalF['workDate'].invalid && modalF['workDate'].touched">
+                <div *ngIf="modalF['workDate'].invalid && modalF['workDate'].touched" class="invalid-feedback d-block small"> Date is required. </div>
+             </div>
+              <div class="mb-3">
+                <label for="activity" class="form-label">Activity Description</label>
+                <textarea id="activity" class="form-control form-control-sm" formControlName="activity" rows="3" [class.is-invalid]="modalF['activity'].invalid && modalF['activity'].touched"></textarea>
+                 <div *ngIf="modalF['activity'].invalid && modalF['activity'].touched" class="invalid-feedback d-block small"> <div *ngIf="modalF['activity'].errors?.['maxlength']">Max 50 chars.</div> </div>
+             </div>
+           </div>
+           <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal" (click)="closeWeekWorkModal()">Close</button>
+              <button type="submit" class="btn btn-sm btn-primary" [disabled]="weekWorkForm.invalid || isModalLoading">
+                 <span *ngIf="isModalLoading" class="spinner-border spinner-border-sm me-1"></span>
+                 {{ editingWeekWork ? 'Update' : 'Add' }} Activity
+              </button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>

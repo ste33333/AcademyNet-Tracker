@@ -1,0 +1,28 @@
+01/10/2022;Pre Festivo;I001
+02/10/2022;Pre Festivo;I001
+03/10/2022;Ufficio;I001
+04/10/2022;Ufficio;I001
+05/10/2022;Ferie;I001
+06/10/2022;Ufficio;I001
+07/10/2022;Ufficio;I001
+01/10/2022;Pre Festivo;P001
+02/10/2022;Pre Festivo;P001
+03/10/2022;Ufficio;P001
+04/10/2022;Ufficio;P001
+05/10/2022;Ufficio;P001
+06/10/2022;Trasferta;P001
+07/10/2022;Trasferta;P001
+1/10/2022;Pre Festivo;F021
+02/10/2022;Pre Festivo;F021
+03/10/2022;Trasferta;F021
+04/10/2022;Corso;F021
+05/10/2022;Ufficio;F021
+06/10/2022;Trasferta;F021
+07/10/2022;Trasferta;F021
+01/10/2022;Notturno;F022
+02/10/2022;Pre Festivo;F022
+03/10/2022;Ufficio;F022
+04/10/2022;Ufficio;F022
+05/10/2022;Ufficio;F022
+06/10/2022;Ufficio;F022
+07/10/2022;Trasferta;F022

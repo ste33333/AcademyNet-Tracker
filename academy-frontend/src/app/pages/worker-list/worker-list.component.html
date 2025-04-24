@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between align-items-center mb-3"> 
+</div>
+  <div *ngIf="isLoading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Loading workers...</p>
+  </div>
+  
+  <div *ngIf="errorMessage && !isLoading" class="alert alert-danger d-flex align-items-center justify-content-between" role="alert">
+    <div>
+      <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ errorMessage }}
+    </div>
+    <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+  </div>
+  
+  <div *ngIf="!isLoading && !errorMessage" class="list-group shadow-sm">
+    @for (worker of workers; track worker.enrollment) {
+      <a [routerLink]="['/workers', worker.enrollment]" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-1">{{ worker.fullName }} <span class="badge bg-secondary fw-normal">{{ worker.enrollment }}</span></h5>
+          <small class="text-muted">{{ worker.role }} - {{ worker.department }}</small>
+        </div>
+        <i class="bi bi-chevron-right"></i> </a>
+    } @empty {
+      <div class="list-group-item text-center text-muted py-3">
+        <i class="bi bi-info-circle me-2"></i>No workers found in the database. </div>
+    }
+  </div>

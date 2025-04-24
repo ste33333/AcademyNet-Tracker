@@ -1,0 +1,47 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Login
+          </h2>
+          <p class="text-center text-muted mb-4">AcademyNet7 StaffTracker</p>
+  
+          <div *ngIf="errorMessage" class="alert alert-danger text-center p-2 small">
+            {{ errorMessage }}
+          </div>
+  
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" id="email" class="form-control" formControlName="email"
+                     placeholder="esempio@libero.it"
+                     [class.is-invalid]="f['email'].invalid && (f['email'].dirty || f['email'].touched)">
+              <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched)" class="invalid-feedback">
+                <div *ngIf="f['email'].errors?.['required']">Email is required.</div>
+                <div *ngIf="f['email'].errors?.['email']">Please enter a valid email address.</div>
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" class="form-control" formControlName="password"
+                     placeholder="Password (123)"
+                     [class.is-invalid]="f['password'].invalid && (f['password'].dirty || f['password'].touched)">
+              <div *ngIf="f['password'].errors?.['required'] && (f['password'].dirty || f['password'].touched)" class="invalid-feedback">
+                Password is required.
+              </div>
+            </div>
+  
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid || isLoading">
+                 <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                {{ isLoading ? 'Logging in...' : 'Login' }}
+              </button>
+            </div>
+          </form>
+  
+           </div>
+      </div>
+    </div>
+  </div>

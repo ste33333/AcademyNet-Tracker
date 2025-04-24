@@ -1,0 +1,9 @@
+I001;Mario Rossi;Impiegato;Ufficio Acquisti;49;Largo Uvia 69;Roma;Roma;00000;123456789
+P001;Sigismondo Della Rotula;Operaio;Assemblaggio Motore;40;Via dell'Acino 341;Milano;MI;11111;9809876
+F021;Erminia Satollà;Impiegato;Ufficio Controllo Qualità;37;Piazza Plutone 12;Milano;MI;00001;11223344
+F022;Eloisia Significata;Operaio;Addetta Servizio Mensa;51;Piazza Salamandra 29;Milano;MI;00002;4433
+R002;Geppo Il Folle;Operaio;Addetto Servizio Mensa;45;Cala delle Sirene 44;Messina;ME;03000;12039124
+R025;Porfirio Cecato;Impiegato;Contabilita;38;Viale Guerrieri della Galassia 8;Bergamo;BG;20002;39335
+M154;Jenny Sapone;Impiegato;Contabilita;47;Piazzetta dei Puffi 721;Venezia;VE;00003;00998810
+T098;Vespasiano Titillo;Operaio;Manutenzione;42;Viottolo delle CImici Profumate 1000;Roma;Roma;00000;3303942
+S027;Gianno Pocuciu;Operaio;Manutenzione;50;Via dei Licantropi Spaventati 8887;Matera;MT;01000;28230

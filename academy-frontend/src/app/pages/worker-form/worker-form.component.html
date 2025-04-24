@@ -1,0 +1,108 @@
+<div *ngIf="successMessage && !isLoading" class="alert alert-success mb-3">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage && !isLoading" class="alert alert-danger mb-3">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading && isEditMode" class="text-center my-5">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p class="mt-2">Loading worker data...</p>
+</div>
+
+<form [formGroup]="workerForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading || !isEditMode" class="border p-3 rounded bg-light shadow-sm">
+
+<h4 class="mb-3">{{ pageTitle }}</h4>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <label for="enrollment" class="form-label">Enrollment</label>
+    <input type="text" id="enrollment" class="form-control form-control-sm" formControlName="enrollment"
+           placeholder="e.g., A123"
+           [class.is-invalid]="f['enrollment'].invalid && (f['enrollment'].dirty || f['enrollment'].touched)">
+     <div *ngIf="f['enrollment'].invalid && (f['enrollment'].dirty || f['enrollment'].touched)" class="invalid-feedback d-block small">
+          <div *ngIf="f['enrollment'].errors?.['required']">Required.</div>
+          <div *ngIf="f['enrollment'].errors?.['pattern']">Format: A123.</div>
+          <div *ngIf="f['enrollment'].errors?.['conflict']">Already exists.</div> </div>
+  </div>
+  <div class="col-md-6">
+     <label for="fullName" class="form-label">Full Name</label>
+     <input type="text" id="fullName" class="form-control form-control-sm" formControlName="fullName"
+            [class.is-invalid]="f['fullName'].invalid && (f['fullName'].dirty || f['fullName'].touched)">
+      <div *ngIf="f['fullName'].invalid && (f['fullName'].dirty || f['fullName'].touched)" class="invalid-feedback d-block small">
+           <div *ngIf="f['fullName'].errors?.['required']">Required.</div>
+      </div>
+  </div>
+</div>
+
+ <div class="row mb-3">
+   <div class="col-md-6">
+     <label for="role" class="form-label">Role</label>
+    <input type="text" id="role" class="form-control form-control-sm" formControlName="role"
+            [class.is-invalid]="f['role'].invalid && (f['role'].dirty || f['role'].touched)">
+     <div *ngIf="f['role'].invalid && (f['role'].dirty || f['role'].touched)" class="invalid-feedback d-block small">
+       <div *ngIf="f['role'].errors?.['required']">Required.</div>
+     </div>
+   </div>
+   <div class="col-md-6">
+     <label for="department" class="form-label">Department</label>
+     <input type="text" id="department" class="form-control form-control-sm" formControlName="department"
+           [class.is-invalid]="f['department'].invalid && (f['department'].dirty || f['department'].touched)">
+      <div *ngIf="f['department'].invalid && (f['department'].dirty || f['department'].touched)" class="invalid-feedback d-block small">
+       <div *ngIf="f['department'].errors?.['required']">Required.</div>
+     </div>
+   </div>
+ </div>
+
+ <div class="row mb-3">
+   <div class="col-md-6">
+     <label for="age" class="form-label">Age</label>
+     <input type="number" id="age" class="form-control form-control-sm" formControlName="age"
+            [class.is-invalid]="f['age'].invalid && (f['age'].dirty || f['age'].touched)">
+      <div *ngIf="f['age'].invalid && (f['age'].dirty || f['age'].touched)" class="invalid-feedback d-block small">
+          <div *ngIf="f['age'].errors?.['min'] || f['age'].errors?.['max']">Must be 16-100.</div>
+       </div>
+   </div>
+   <div class="col-md-6">
+     <label for="phone" class="form-label">Phone</label>
+     <input type="tel" id="phone" class="form-control form-control-sm" formControlName="phone">
+   </div>
+ </div>
+
+ <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input type="text" id="address" class="form-control form-control-sm" formControlName="address">
+  </div>
+
+ <div class="row mb-3">
+    <div class="col-md-5">
+       <label for="city" class="form-label">City</label>
+       <input type="text" id="city" class="form-control form-control-sm" formControlName="city">
+     </div>
+     <div class="col-md-4">
+        <label for="province" class="form-label">Province</label>
+        <input type="text" id="province" class="form-control form-control-sm" formControlName="province">
+      </div>
+      <div class="col-md-3">
+         <label for="cap" class="form-label">CAP</label>
+         <input type="text" id="cap" class="form-control form-control-sm" formControlName="cap"
+               [class.is-invalid]="f['cap'].invalid && (f['cap'].dirty || f['cap'].touched)">
+          <div *ngIf="f['cap'].invalid && (f['cap'].dirty || f['cap'].touched)" class="invalid-feedback d-block small">
+           <div *ngIf="f['cap'].errors?.['pattern']">5 digits.</div>
+         </div>
+       </div>
+  </div>
+
+<hr>
+
+<div class="d-flex justify-content-end">
+   <button type="button" class="btn btn-secondary btn-sm me-2" routerLink="/workers" [disabled]="isLoading"> <i class="bi bi-x-circle me-1"></i> Cancel
+   </button>
+   <button type="submit" class="btn btn-primary btn-sm" [disabled]="workerForm.invalid || isLoading">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+      <i *ngIf="!isLoading" class="bi" [class.bi-save-fill]="!isEditMode" [class.bi-pencil-square]="isEditMode"></i>
+      {{ isLoading ? (isEditMode ? 'Updating...' : 'Saving...') : (isEditMode ? 'Update Worker' : 'Save Worker') }}
+   </button>
+ </div>
+
+</form>
